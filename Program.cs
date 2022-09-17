@@ -1,7 +1,15 @@
+using MeuApp.Database.Context;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Registrar o context como um serviço do DB //
+builder.Services.AddDbContext<AppDbContext>(optionsAction =>
+    optionsAction.UseNpgsql(builder.Configuration["connectionStrings:DefaultConnection"]));
 
 var app = builder.Build();
 
