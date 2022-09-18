@@ -1,4 +1,6 @@
 using MeuApp.Database.Context;
+using MeuApp.Database.Repositories;
+using MeuApp.Database.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -10,6 +12,10 @@ builder.Services.AddControllersWithViews();
 // Registrar o context como um serviço do DB //
 builder.Services.AddDbContext<AppDbContext>(optionsAction =>
     optionsAction.UseNpgsql(builder.Configuration["connectionStrings:DefaultConnection"]));
+
+// Injeção de Dependencia no DB //
+builder.Services.AddTransient<ILancheRepository, LancheRepository>();
+builder.Services.AddTransient<ICategoriaRepository, CategoriaRepository>();
 
 var app = builder.Build();
 
